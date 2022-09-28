@@ -2,26 +2,15 @@ import axios from 'axios'
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import Contacts from './Contacts'
-import Rooms from './Rooms'
+import Room from './Room'
 
 export default function Dashbord() {
   const {user} = useAuth()
-  const getPosts = () => {
-    axios.get('/post/all', {
-      headers:{
-        'authorization': `Bearer ${JSON.parse(sessionStorage.getItem('access_token'))}`
-      }
-    }).then(res => {
-      console.log('res', res);
-    }).catch(err =>{
-      console.log('err', err);
-    })
-  }
+
   return (
-    <div className='bg-black/30 p-4 w-full h-screen flex'>
-      <Contacts/>
-      <Rooms/>
-      <button onClick={getPosts}>posts</button>
+    <div className='bg-black/30 grow p-4 w-full h-auto flex flex-wrap sm:flex-nowrap gap-1'>
+      <Contacts />
+      <Room />
     </div>
   )
 }

@@ -1,16 +1,35 @@
 import axios from 'axios'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { useRoom } from '../context/roomContext'
+
 
 export default function Contacts() {
-  const [contacts, setContacts] = useState([])
-  useEffect(() => {
-    axios.get('/contacts').then(res => setContacts(res.data.contacts)).catch(err => console.log('err at fetching contacts', err))
-  },[])
+
+  const { user } = useAuth()
+  const { socket, roomName, setRoomName, joinRoom } = useRoom()
+
+  const createNewRoom = () => {
+    socket.emit('createNewRoom', {user, roomName});
+  }
+
+  const joinNewRoom = () => {
+    socket.emit("joinRoom", { user, roomName });
+  }
+
   return (
-    <div>
-      Contacts
+    <div className='bg-black/50 basis-1/3 rounded'>
+      <h1 className='text-4xl font-semibold bg-black/20 p-2 text-center'>Contacts</h1>
+      <div className='flex flex-col gap-1 justify-center items-center my-1'>
+        <div className='m-2 flex flex-col justify-center items-center gap-2'>
+          <input className='flex-grow p-2 bg-transparent/25 border-b-2 rounded-md w-full' onChange={(e) => setRoomName(e.target.value)} type="text" />
+          <button onClick={createNewRoom} className='bg-white/25 p-2 rounded w-full'>Create New room</button>
+
+          <button onClick={joinNewRoom} className='bg-white/25 p-2 rounded w-full'>Join room</button>
+        </div>
+        <div className='w-full flex flex-col gap-2'>
+        </div>
+      </div>
     </div>
   )
 }

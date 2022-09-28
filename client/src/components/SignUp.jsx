@@ -32,7 +32,7 @@ export default function SignUp() {
         
         {alert && <div className="bg-red-500 p-1 rounded">{alert}</div>}
         <label className='mt-2' htmlFor="first-name">First Name</label>
-        <input onChange={(e) => setFirstName(e.target.value)} className='bg-transparent border-b-2 focus:outline-none' type="text" pattern="[a-z]{3,10}$" placeholder='abc'  required/>
+        <input onChange={(e) => setFirstName(e.target.value)} className='bg-transparent border-b-2 focus:outline-none' type="text" pattern="[a-zA-Z0-9]{3,10}$" placeholder='abc'  required/>
 
         <label className='mt-2' htmlFor="Last--name">Last Name</label>
         <input onChange={(e) => setLastName(e.target.value)} className='bg-transparent border-b-2 focus:outline-none' type="text" pattern="[a-z]{3,10}$" placeholder='xyz' required/>

@@ -20,7 +20,6 @@ export function AuthProvider({children}){
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem('user'))
     if(user){
-
       setUser(user)
       setIsLoggedIn(true);
     }
@@ -28,7 +27,7 @@ export function AuthProvider({children}){
 
   const login = (email, password) => {
     axios
-      .post("/login-data", { email, password })
+      .post("http://localhost:8080/login-data", { email, password })
       .then((res) => {
         console.log(res.data.access_token)
         sessionStorage.setItem('access_token', JSON.stringify(res.data.access_token))
