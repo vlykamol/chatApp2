@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "./AuthContext";
 
@@ -8,7 +9,7 @@ export function useRoom() {
   return useContext(roomContext);
 }
 
-const socket = io("http://localhost:8080", {
+const socket = io("/", {
     withCredentials: true,
     extraHeaders: {
       "my-custom-header": "abcd",
@@ -17,7 +18,7 @@ const socket = io("http://localhost:8080", {
 );
 
 socket.on("connect", () => {
-  console.log('connected to io', socket.id);
+  console.log('connected to io with id:', socket.id);
 });
 
 socket.on("disconnect", () => {
@@ -25,32 +26,48 @@ socket.on("disconnect", () => {
 });
 
 export function RoomProvider({ children }) {
+
   const { user } = useAuth();
+  const [rooms, setRooms] = useState([]);
+  const [activeRoom, setActiveRoom] = useState({roomName: "lobby"})
 
-  const [roomName, setRoomName] = useState("");
-
-  socket.on('messageAll', message => {
-    console.log('message to all : ', message);
-  })
-
-  socket.on('message', data => {
-    const {roomName, user, message} = data
-    console.log(roomName, user, 'send message: ', message);
-  })
+  useEffect(() => {
+    axios.get(`/rooms/getAllRooms/${user._id}`).then(res => {
+      setRooms(res.data)
+      console.log(res.data);
+    }).catch(err => console.log("err", err))
+  }, [])
 
   const msgToAll = (message) => {
-    socket.emit('messageAll', message)
+    socket.emit('messageAll', {user, message})
   }
 
   const sendMessage = (roomName, message) => {
-    console.log(roomName, message);
+    console.log('sending msg to', roomName, message);
     socket.emit("message", { user, roomName, message });
   };
 
+  const createNewRoom = (roomName) => {
+    axios.post(`/rooms/createRoom`, {_id: user._id, roomName}).then(res => {
+      console.log('new room created', res);
+    }).catch(err => console.log("err while creating new room", err))
+  }
+
+
+  const joinRoom = (roomName) => {
+    axios.post(`/rooms/joinRoom`, {_id: user._id, roomName}).then(res => {
+      console.log('new room joined', res);
+    }).catch(err => console.log("err while joining new room", err))
+  }
+
   const value = {
     socket,
-    roomName,
-    setRoomName,
+    rooms,
+    activeRoom,
+    setActiveRoom,
+    createNewRoom,
+    joinRoom,
+    setRooms,
     msgToAll,
     sendMessage,
   };

@@ -13,7 +13,7 @@ export default function Navbar() {
       {user ? <button onClick={logout}>logout</button> : <>
       <Link className='mx-1 underline' to={'/signup'} >signup</Link>
       <Link className='mx-1 underline' to={'/login'} >login</Link></>}
-      <p>{user}</p>
+      <p>{user && user.user}</p>
       </div>
     </div>
   )

@@ -27,12 +27,11 @@ export function AuthProvider({children}){
 
   const login = (email, password) => {
     axios
-      .post("http://localhost:8080/login-data", { email, password })
+      .post("/login-data", { email, password })
       .then((res) => {
-        console.log(res.data.access_token)
-        sessionStorage.setItem('access_token', JSON.stringify(res.data.access_token))
-        sessionStorage.setItem('user', JSON.stringify(res.data.user))
-        setUser(res.data.user)
+        console.log(res.data);
+        sessionStorage.setItem('user', JSON.stringify(res.data))
+        setUser(res.data)
         setIsLoggedIn(true)
       })
       .catch((err) => console.log("error while login", err));

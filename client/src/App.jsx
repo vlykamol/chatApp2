@@ -19,7 +19,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
           <Route path="/dashbord" element={<PrivateRoute>
              <RoomProvider>
-              <Dashbord />
+                <Dashbord />
              </RoomProvider>
             </PrivateRoute>}/>
         </Routes>

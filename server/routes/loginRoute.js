@@ -19,6 +19,7 @@ router.use((req, res) => {
       const access_token = jwt.sign(_user, process.env.ACCESS_TOKEN_SECRET)
       res.json({
         user:data.firstName,
+        _id: data._id,
         access_token : access_token
       })
     }
