@@ -9,7 +9,7 @@ export function useRoom() {
   return useContext(roomContext);
 }
 
-const uri = `http://localhost:8080`
+const uri = ``//in dev mode, if serving from server than uri = ``
 
 const socket = io(`${uri}/`, {
     withCredentials: true,

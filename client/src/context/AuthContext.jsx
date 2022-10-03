@@ -9,7 +9,7 @@ export function useAuth(){
   return useContext(AuthContext)
 }
 
-const uri = `http://localhost:8080`
+const uri = ``//in dev mode, if serving from server than uri = ``
 
 export function AuthProvider({children}){
 
