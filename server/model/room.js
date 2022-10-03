@@ -4,7 +4,8 @@ const user = require('./user')
 const roomTamplate = new mongoose.Schema({
   roomName:{
     type: String,
-    required : true
+    required : true,
+    unique:true
   },
   admin:{
     type: mongoose.Schema.Types.ObjectId,

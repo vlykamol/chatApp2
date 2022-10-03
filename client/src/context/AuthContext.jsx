@@ -9,6 +9,8 @@ export function useAuth(){
   return useContext(AuthContext)
 }
 
+const uri = `http://localhost:8080`
+
 export function AuthProvider({children}){
 
   const [loading, setLoading] = useState(false)
@@ -27,7 +29,7 @@ export function AuthProvider({children}){
 
   const login = (email, password) => {
     axios
-      .post("/login-data", { email, password })
+      .post(`${uri}/login-data`, { email, password })
       .then((res) => {
         console.log(res.data);
         sessionStorage.setItem('user', JSON.stringify(res.data))
@@ -39,7 +41,7 @@ export function AuthProvider({children}){
 
   const signup = (firstName, lastName, email, password ) => {
     axios
-      .post("/signup-data", { firstName, lastName, email, password })
+      .post(`${uri}/signup-data`, { firstName, lastName, email, password })
       .then((res) => {
         console.log(res)
         setUser(res.user)
@@ -62,6 +64,7 @@ export function AuthProvider({children}){
   
   const value = {
     user,
+    uri,
     login,
     signup,
     logout

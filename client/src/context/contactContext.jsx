@@ -12,9 +12,6 @@ export function contactProvider({children}) {
   const [contacts, setContacts] = useState([])
 
 
-
-  const create
-
   const value = {}
 
   return <contactContext.Provider value={value}>

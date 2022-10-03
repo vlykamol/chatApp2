@@ -14,9 +14,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-black/50 text-white">
+    <div className="flex justify-center items-center w-full h-full grow bg-black/50 text-white">
       <form onSubmit={(e) => handelLogin(e)} autoComplete="off" className="flex flex-col gap-2 rounded bg-black/40 p-4 m-2 w-full sm:w-96">
-        <h2 className="font-bold text-3xl">login</h2>
+        <h2 className="font-bold text-3xl underline">login</h2>
         <label className="mt-2" htmlFor="email">
           Email
         </label>

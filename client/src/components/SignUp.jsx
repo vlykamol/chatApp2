@@ -26,10 +26,10 @@ export default function SignUp() {
   }
 
   return (
-    <div className='flex justify-center items-center w-full h-screen bg-black/50 text-white'>
+    <div className="flex justify-center items-center w-full h-full grow bg-black/50 text-white">
       <form onSubmit={(e) => handelSignup(e)} autoComplete="off" className='flex flex-col gap-2 rounded bg-black/40 p-4 m-2 w-full sm:w-96'>
-        <h2 className='font-bold text-3xl'>SignUp</h2>
-        
+        <h2 className='font-bold text-3xl underline'>SignUp</h2>
+
         {alert && <div className="bg-red-500 p-1 rounded">{alert}</div>}
         <label className='mt-2' htmlFor="first-name">First Name</label>
         <input onChange={(e) => setFirstName(e.target.value)} className='bg-transparent border-b-2 focus:outline-none' type="text" pattern="[a-zA-Z0-9]{3,10}$" placeholder='abc'  required/>

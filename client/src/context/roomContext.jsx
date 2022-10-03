@@ -9,7 +9,9 @@ export function useRoom() {
   return useContext(roomContext);
 }
 
-const socket = io("/", {
+const uri = `http://localhost:8080`
+
+const socket = io(`${uri}/`, {
     withCredentials: true,
     extraHeaders: {
       "my-custom-header": "abcd",
@@ -29,14 +31,19 @@ export function RoomProvider({ children }) {
 
   const { user } = useAuth();
   const [rooms, setRooms] = useState([]);
+  const [refresh, setRefresh] = useState(false)
   const [activeRoom, setActiveRoom] = useState({roomName: "lobby"})
 
   useEffect(() => {
-    axios.get(`/rooms/getAllRooms/${user._id}`).then(res => {
-      setRooms(res.data)
+    axios.get(`${uri}/rooms/getAllRooms/${user._id}`).then(res => {
+      setRooms([{roomName : "lobby"}, ...res.data])
       console.log(res.data);
     }).catch(err => console.log("err", err))
-  }, [])
+  }, [refresh])
+
+  useEffect(()=>{
+    console.log('refreshing');
+  },[refresh])
 
   const msgToAll = (message) => {
     socket.emit('messageAll', {user, message})
@@ -48,15 +55,17 @@ export function RoomProvider({ children }) {
   };
 
   const createNewRoom = (roomName) => {
-    axios.post(`/rooms/createRoom`, {_id: user._id, roomName}).then(res => {
+    axios.post(`${uri}/rooms/createRoom`, {_id: user._id, roomName}).then(res => {
       console.log('new room created', res);
+      setRefresh(b => !b)
     }).catch(err => console.log("err while creating new room", err))
   }
 
 
   const joinRoom = (roomName) => {
-    axios.post(`/rooms/joinRoom`, {_id: user._id, roomName}).then(res => {
+    axios.post(`${uri}/rooms/joinRoom`, {_id: user._id, roomName}).then(res => {
       console.log('new room joined', res);
+      setRefresh(b => !b)
     }).catch(err => console.log("err while joining new room", err))
   }
 
