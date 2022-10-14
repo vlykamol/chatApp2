@@ -1,4 +1,4 @@
-import {Routes, Route, Router} from "react-router-dom"
+import {Routes, Route} from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Login from "./components/Login"
 import SignUp from "./components/SignUp"

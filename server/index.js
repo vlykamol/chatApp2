@@ -34,6 +34,8 @@ mongoose.connect('mongodb://localhost:27017/chatApp2', () => console.log('databa
 app.use(express.static(path.join(__dirname, '../client/dist')))
 app.use(express.json())
 
+
+//when using frontend on different port
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
